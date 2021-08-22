@@ -10,7 +10,12 @@ const userRoute = require("./routes/users.route");
 const postRoute = require("./routes/post.route");
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    exposedHeaders: ["www-authenticate"],
+  })
+);
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
