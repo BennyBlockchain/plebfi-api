@@ -4,6 +4,7 @@
   "description": "API middleware for LSAT paywall payments",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ben Schroth",
@@ -12,7 +13,9 @@
     "body-parser": "^1.19.0",
     "boltwall": "^6.0.3",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "http": "^0.0.1-security"
+    "http": "^0.0.1-security",
+    "mongoose": "^5.13.7"
   }
 }

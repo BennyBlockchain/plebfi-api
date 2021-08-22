@@ -3,6 +3,7 @@ const User = require("../models/User");
 function getUsers(req, res, next) {
   User.find({})
     .then((data) => {
+      console.log(data);
       res.send(data);
     })
     .catch((err) => {

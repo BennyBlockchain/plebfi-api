@@ -1,25 +1,36 @@
-const express = require('express')
-const cors = require('cors')
-const bodyParser = require('body-parser')
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
-const {boltwall} = require('boltwall')
+const { boltwall } = require("boltwall");
 
-const app = express()
+const userRoute = require("./routes/users.route");
+const postRoute = require("./routes/post.route");
+const app = express();
 
-app.use(cors())
+app.use(cors());
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-    return res.json({returned: true})
-})
+app.use("/", userRoute);
 
+app.use(boltwall());
 
-app.use(boltwall())
+app.use("/u", postRoute);
 
-app.get('/protected', (req,res) => {
-    return res.json({message: "Need auth"})
-})
-app.listen(5000, () => console.log('listening on port 5000'))
+const MONGO_DB = process.env.MONGOOSE_CONNECTION;
+
+mongoose.connect(MONGO_DB, {
+  useNewUrlParser: "true",
+});
+mongoose.connection.on("error", (err) => {
+  console.log("err", err);
+});
+mongoose.connection.on("connected", (err, res) => {
+  console.log("mongoose is connected");
+});
+app.listen(5000, () => console.log("listening on port 5000"));
